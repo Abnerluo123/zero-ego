@@ -4,9 +4,23 @@ description: Drive the Ego Lite browser with the ego_lite_* MCP tools (start, sn
 metadata:
   version: "1.7.3"
   kind: "mcp-first"
+  status: "superseded"
 ---
 
 # ego-browser (via ego_lite MCP tools)
+
+> [!IMPORTANT]
+> **Superseded — prefer the `ego_browser` tool if it exists.**
+>
+> The MCP connector this skill documents is no longer the recommended path. A DSH plugin now runs the
+> **official** `ego-browser` CLI from the Harness host process, with no connector and no Go binary, and
+> exposes the full official API as one `ego_browser` tool:
+>
+> **https://github.com/Abnerluo123/dsh-ego-browser-cli**
+>
+> Check your tool list first. If `ego_browser` is available, use it and disregard the `ego_lite_*`
+> guidance below. Otherwise this machine still has the legacy connector installed, and the flow below
+> remains valid.
 
 This machine runs the zero-ego connector, so the `ego_lite_*` MCP tools are
 already available. Use them directly.

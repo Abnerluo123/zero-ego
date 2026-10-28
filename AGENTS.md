@@ -1,5 +1,15 @@
 # Agent quickstart
 
+> [!IMPORTANT]
+> ## This connector is superseded
+>
+> **Prefer [dsh-ego-browser-cli](https://github.com/Abnerluo123/dsh-ego-browser-cli)** — a DSH plugin that runs
+> the official `ego-browser` CLI from the Harness host process. It needs no MCP connector and no Go binary, and
+> exposes the official API directly as one `ego_browser` tool.
+>
+> If the `ego_browser` tool is present, use it and ignore the `ego_lite_*` instructions below.
+> The rest of this file documents the legacy MCP path and is kept for existing installs.
+
 ## Install once
 
 [Download](https://github.com/Abnerluo123/zero-ego/releases/latest) and unzip either package. **lite is Ego-native, not feature-reduced; both require Ego Lite.**
@@ -12,7 +22,7 @@ Run `install.ps1 -ApplyProfile` (Windows) or `bash install.sh --apply` (macOS/Li
 2. `ego_lite_start` once; save `spaceId` and resume it. Claim user-owned spaces only with explicit authorization.
 3. `ego_lite_snapshot` for refs; use precise native selectors and wait for the expected result. Actions are brief; screenshots are for visual evidence.
 4. **On success, call `ego_lite_finish` BEFORE the final answer and wait for its receipt.** Default closes Agent tabs. Use `keep:"all"` or `keep:"p2"` only when results must remain; keeping tabs still ends the task.
-5. Confirm `agentControlReleased:true`. If false/null, call `ego_lite_control_status(spaceId)` and report uncertainty—not “control released.” Do not replay an uncertain finish or clean other agents' spaces.
+5. Confirm `agentControlReleased:true`. If false/null, call `ego_lite_control_status(spaceId)` and report uncertainty—not "control released." Do not replay an uncertain finish or clean other agents' spaces.
 6. No page operations after finish: labels are invalid. Optional `finish(spaceId)` addresses one known Agent-owned space after restart; it does not claim user spaces.
 
 For user action, interruption or an error, call `ego_lite_handoff` and stop the turn; do not finish. Closing a page, final text, inactivity or MCP disconnection is not completion. Persistent MCP cannot detect the model's final response.

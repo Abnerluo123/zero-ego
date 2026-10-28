@@ -1,13 +1,29 @@
-# zero-ego · Ego 原生版
+# zero-ego (lite)
 
-配合 Ego Lite 官方 skill 使用，**完整功能，不是精简版**；与标准包共享 Ego 后端，两包都需要 Ego Lite。
+> [!IMPORTANT]
+> **不再需要本项目。** 官方 `ego-browser` CLI 现在可以直接从 DSH 主进程运行，无需 MCP 连接器与 Go 二进制：
+> **[Abnerluo123/dsh-ego-browser-cli](https://github.com/Abnerluo123/dsh-ego-browser-cli)**。
+> 本说明仅保留给已安装的用户。
 
-[下载](https://github.com/Abnerluo123/zero-ego/releases/latest) 后解压：Windows 用 `.\install.ps1 -ApplyProfile`；macOS/Linux 用 `bash ./install.sh --apply`。
+本包为 **Ego 原生版**：不经过 MCP 包装，直接配合官方 `ego-browser` skill 使用，功能与官方一致。
 
-`start → snapshot → 操作与验证 → finish → 等待释放回执 → 回复用户`
+**lite 不是精简版**——它与标准包使用同一 Ego 后端，两包都**必须安装 Ego Lite**，不兼容其他浏览器。
 
-成功结束必须 `finish`，默认关闭 Agent 标签页。仅当结果需要保留时用 `keep:"all"` 或 `keep:"p2"`；仍须确认 `agentControlReleased:true`。false/null 用 `control_status(spaceId)` 检查，不宣称已释放。
+## 安装
 
-用户操作、暂停或报错用 `handoff` 后停止；关标签、最终回复或断开 MCP 不会自动完成任务。不要清理其他 Agent 的空间。
+解压发布包后运行：
 
-[Agent 快速指南](AGENTS.md) · [工具速查](docs/AGENT_GUIDE.md) · [详细参考](docs/REFERENCE.md)
+- Windows：`.\install.ps1 -ApplyProfile`
+- macOS / Linux：`bash ./install.sh --apply`
+
+安装器会备份并更新现有 MCP 配置，不会终止其他会话。
+
+## 使用
+
+1. 阅读已安装的 `ego-browser` skill。
+2. 每次任务先 `ego_lite_start`，保存 `spaceId` 并在后续调用中续用。
+3. `ego_lite_snapshot` 取 refs，用精确选择器操作，并等待预期结果。
+4. 成功后、给出最终答复**之前**调用 `ego_lite_finish`，并确认 `agentControlReleased: true`。
+5. 用户接管、暂停或出错时改用 `ego_lite_handoff`，不要 `finish`。
+
+完整说明见 [README](README.md) 与 [Agent 快速指南](AGENTS.md)。
